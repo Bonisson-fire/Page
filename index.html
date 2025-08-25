@@ -3,18 +3,91 @@
 <head>
   <title>Forsaken Level Calculator</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    label, input, button { font-size: 1.2em; }
-    #result { margin-top: 1em; font-weight: bold; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f2f6fc 0%, #cfd9e6 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      padding: 32px 24px 24px 24px;
+      text-align: center;
+    }
+    h1 {
+      color: #2a3c67;
+      margin-bottom: 18px;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+    .image-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .image-row img {
+      border-radius: 10px;
+      height: 100px;
+      width: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      border: 2px solid #e1e8f2;
+      background: #f8fafc;
+    }
+    label, input, button {
+      font-size: 1.1em;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #34496b;
+      font-weight: 600;
+    }
+    input[type="number"] {
+      padding: 8px;
+      width: 110px;
+      border: 1px solid #b5c3d9;
+      border-radius: 6px;
+      margin-right: 10px;
+    }
+    button {
+      background: #3e63dd;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #2a43a1;
+    }
+    #result {
+      margin-top: 1em;
+      font-weight: bold;
+      color: #296d3c;
+      font-size: 1.18em;
+      min-height: 36px;
+    }
   </style>
 </head>
 <body>
-  <h1>Level Progress Calculator</h1>
-  <label for="levelInput">Enter your current level (0-100):</label>
-  <input id="levelInput" type="number" min="0" max="100" value="0" />
-  <button onclick="calculateProgress()">Calculate Progress</button>
-  <div id="result"></div>
-
+  <div class="container">
+    <h1>Level Progress Calculator</h1>
+    <div class="image-row">
+      <img src="PartyNoob.jpg" alt="PartyNoob">
+      <img src="TwoTime.jpg" alt="TwoTime">
+    </div>
+    <label for="levelInput">Enter your current level (0-100):</label>
+    <input id="levelInput" type="number" min="0" max="100" value="0" />
+    <button onclick="calculateProgress()">Calculate Progress</button>
+    <div id="result"></div>
+  </div>
   <script>
     // Function to calculate total exp needed for a given level
     function getTotalExp(level) {
@@ -22,20 +95,15 @@
       // Sum of first n natural numbers: n*(n+1)/2
       return 100 * (level * (level + 1) / 2);
     }
-
     function calculateProgress() {
       const level = parseInt(document.getElementById('levelInput').value, 10);
-
       if (isNaN(level) || level < 0 || level > 100) {
         document.getElementById('result').textContent = 'Please enter a valid level between 0 and 100.';
         return;
       }
-
       const totalExpMax = getTotalExp(100); // Total exp needed for level 100
       const totalExpCurrent = getTotalExp(level);
-
       const percent = ((totalExpCurrent / totalExpMax) * 100).toFixed(2);
-
       document.getElementById('result').textContent = 
         `You are ${percent}% of the way to level 100!`;
     }
