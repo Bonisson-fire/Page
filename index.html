@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Forsaken Level Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label, input, button { font-size: 1.2em; }
+    #result { margin-top: 1em; font-weight: bold; }
+  </style>
 </head>
 <body>
-    <h1> I LOVE THE GAYS </h1>
+  <h1>Level Progress Calculator</h1>
+  <label for="levelInput">Enter your current level (0-100):</label>
+  <input id="levelInput" type="number" min="0" max="100" value="0" />
+  <button onclick="calculateProgress()">Calculate Progress</button>
+  <div id="result"></div>
+
+  <script>
+    // Function to calculate total exp needed for a given level
+    function getTotalExp(level) {
+      // For level n, total exp = 100 + 200 + ... + n*100 = 100*(1 + 2 + ... + n)
+      // Sum of first n natural numbers: n*(n+1)/2
+      return 100 * (level * (level + 1) / 2);
+    }
+
+    function calculateProgress() {
+      const level = parseInt(document.getElementById('levelInput').value, 10);
+
+      if (isNaN(level) || level < 0 || level > 100) {
+        document.getElementById('result').textContent = 'Please enter a valid level between 0 and 100.';
+        return;
+      }
+
+      const totalExpMax = getTotalExp(100); // Total exp needed for level 100
+      const totalExpCurrent = getTotalExp(level);
+
+      const percent = ((totalExpCurrent / totalExpMax) * 100).toFixed(2);
+
+      document.getElementById('result').textContent = 
+        `You are ${percent}% of the way to level 100!`;
+    }
+  </script>
 </body>
 </html>
